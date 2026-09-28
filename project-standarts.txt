@@ -1,0 +1,4 @@
+Project Standards:
+ - Login standards
+ - Naming standards (caMel,PasCal,KE-BAB,SNA_KE)
+ - Error handling
