@@ -22,6 +22,10 @@ class MemberService {
       throw new Errors(HttpCode.BAD_REQUEST, Message.CREATE_FAILED);
     }
 
+    //hashing pswd
+    const salt = await bcrypt.genSalt();
+    input.memberPassword = await bcrypt.hash(input.memberPassword, salt);
+
     try {
       const result = await this.memberModel.create(input);
       result.memberPassword = "";
@@ -46,11 +50,14 @@ class MemberService {
       .exec();
 
     //2 ta errorni bitta qilsak xavfsizlik uchun yaxshi buladi!!!
-    if (!member) {
+    if (!member || !member.memberPassword) {
       throw new Errors(HttpCode.UNAUTHORIZED, Message.WRONG_PSWD_NICK);
     }
 
-    const isMatch = input.memberPassword === member.memberPassword;
+    const isMatch = await bcrypt.compare(
+      input.memberPassword,
+      member.memberPassword
+    );
     if (!isMatch) {
       throw new Errors(HttpCode.UNAUTHORIZED, Message.WRONG_PSWD_NICK);
     }
