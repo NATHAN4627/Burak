@@ -1,16 +1,29 @@
-// O Task
+// P Task
 
-function calculateSumOfNumbers(input: any[]): number {
-  let res = 0;
-  input.forEach((num) => {
-    if (typeof num === "number") {
-      return (res += num);
-    }
-  });
-  return res;
+function objectToArray(input: any): any[][] {
+  return Object.entries(input);
 }
 
-console.log(calculateSumOfNumbers([10, "15", 43, { number: 25 }]));
+console.log(
+  objectToArray({
+    name: "Nathan",
+    age: 21,
+  })
+);
+
+// O Task
+
+// function calculateSumOfNumbers(input: any[]): number {
+//   let res = 0;
+//   input.forEach((num) => {
+//     if (typeof num === "number") {
+//       return (res += num);
+//     }
+//   });
+//   return res;
+// }
+
+// console.log(calculateSumOfNumbers([10, "15", 43, { number: 25 }]));
 
 // N Task
 
