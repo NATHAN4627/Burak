@@ -1,15 +1,24 @@
-// P Task
+// Q Task
 
-function objectToArray(input: any): any[][] {
-  return Object.entries(input);
+function hasProperty(obj: Record<string, any>, str: string): boolean {
+  const values = Object.values(obj);
+  return values.includes(str);
 }
 
-console.log(
-  objectToArray({
-    name: "Nathan",
-    age: 21,
-  })
-);
+console.log(hasProperty({ group: "MIT" }, "MIT"));
+
+// P Task
+
+// function objectToArray(input: any): any[][] {
+//   return Object.entries(input);
+// }
+
+// console.log(
+//   objectToArray({
+//     name: "Nathan",
+//     age: 21,
+//   })
+// );
 
 // O Task
 
