@@ -6,14 +6,12 @@ import restaurantController from "./controllers/restaurant.controller";
 routerAdmin.get("/", restaurantController.goHome);
 
 routerAdmin
-  //.route("/same endpoint")
-  .get("/login", restaurantController.goLogin)
-  .post("/login", restaurantController.processLogin);
+  .get("/signup", restaurantController.getSignup)
+  .post("/signup", restaurantController.processSignup);
 
 routerAdmin
-  //.route("/same endpoint")
-  .get("/signup", restaurantController.goSignup)
-  .post("/signup", restaurantController.processSignup);
+  .get("/login", restaurantController.getLogin)
+  .post("/login", restaurantController.processLogin);
 
 /** Product */
 /** User */
