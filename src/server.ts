@@ -9,13 +9,13 @@ mongoose
     console.log("Success on db");
     const PORT = process.env.PORT ?? 3003;
     app.listen(PORT, function () {
-      console.log(`Server runnig on port: ${PORT}`);
+      console.info(`Server runnig on port: ${PORT}`);
+      console.log(`Admin project on http://localhost:${PORT}/admin \n`);
     });
   })
   .catch((err) => {
     console.log("Error on connnecting to db", err);
   });
 
-
-  // node js ni 22.0 versionga utkazamiz birinchi 
-  // mongoose schema yaratishga ham yani table lar yaratishga ham yordam beradi
+// node js ni 22.0 versionga utkazamiz birinchi
+// mongoose schema yaratishga ham yani table lar yaratishga ham yordam beradi
