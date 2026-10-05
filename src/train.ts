@@ -1,11 +1,24 @@
-// Q Task
+// R Task
 
-function hasProperty(obj: Record<string, any>, str: string): boolean {
-  const values = Object.values(obj);
-  return values.includes(str);
+function calculate(inputs: string): number {
+  let res = 0;
+  const splitted = inputs.split("+");
+  for (const split of splitted) {
+    res += Number(split);
+  }
+  return res;
 }
 
-console.log(hasProperty({ group: "MIT" }, "MIT"));
+console.log(calculate("1+7"));
+
+// Q Task
+
+// function hasProperty(obj: Record<string, any>, str: string): boolean {
+//   const values = Object.values(obj);
+//   return values.includes(str);
+// }
+
+// console.log(hasProperty({ group: "MIT" }, "MIT"));
 
 // P Task
 
