@@ -3,7 +3,7 @@ import { Request, Response } from "express";
 import MemberService from "../models/Member.service";
 import { MemberInput, LoginInput, AdminRequest } from "../libs/types/member";
 import { MemberType } from "../libs/enums/member.enum";
-import { Message } from "../libs/Errors";
+import Errors, { Message } from "../libs/Errors";
 
 const memberService = new MemberService(); //STATIC to call in every method
 const restaurantController: T = {};
@@ -13,6 +13,7 @@ restaurantController.goHome = (req: Request, res: Response) => {
     res.render("home");
   } catch (err) {
     console.log("Error, goHome", err);
+    res.redirect("/admin");
   }
 };
 
@@ -21,6 +22,7 @@ restaurantController.getSignup = (req: Request, res: Response) => {
     res.render("signup");
   } catch (err) {
     console.log("Error, goSignup", err);
+    res.redirect("/admin");
   }
 };
 
@@ -29,6 +31,7 @@ restaurantController.getLogin = (req: Request, res: Response) => {
     res.render("login");
   } catch (err) {
     console.log("Error, goLogin", err);
+    res.redirect("/admin");
   }
 };
 
@@ -47,6 +50,11 @@ restaurantController.processSignup = async (
       res.send(result);
     });
   } catch (err) {
+    const message =
+      err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+    res.send(
+      `<script> alert("${message}"); window.location.replace('admin/signup') </script>`
+    );
     res.send(err);
   }
 };
@@ -64,6 +72,11 @@ restaurantController.processLogin = async (
       res.send(result);
     });
   } catch (err) {
+    const message =
+      err instanceof Errors ? err.message : Message.SOMETHING_WENT_WRONG;
+    res.send(
+      `<script> alert("${message}"); window.location.replace('admin/login') </script>`
+    );
     res.send(err);
   }
 };
@@ -79,6 +92,17 @@ restaurantController.checkAuthSession = async (
   } catch (err) {
     console.log("Error, checkAuthSession", err);
     res.send(err);
+  }
+};
+
+restaurantController.logout = async (req: AdminRequest, res: Response) => {
+  try {
+    req.session.destroy(function () {
+      res.redirect("/admin");
+    });
+  } catch (err) {
+    console.log("Error, checkAuthSession", err);
+    res.redirect("/admin");
   }
 };
 
