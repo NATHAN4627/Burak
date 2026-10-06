@@ -1,15 +1,27 @@
-// R Task
+// S Task
 
-function calculate(inputs: string): number {
-  let res = 0;
-  const splitted = inputs.split("+");
-  for (const split of splitted) {
-    res += Number(split);
+function missingNumber(nums: number[]): number {
+  nums.sort();
+  for (let i = 0; i < nums.length; i++) {
+    if (i !== nums[i]) return i;
   }
-  return res;
+  return nums.length;
 }
 
-console.log(calculate("1+7"));
+console.log(missingNumber([0, 1, 2, 3, 5]));
+
+// R Task
+
+// function calculate(inputs: string): number {
+//   let res = 0;
+//   const splitted = inputs.split("+");
+//   for (const split of splitted) {
+//     res += Number(split);
+//   }
+//   return res;
+// }
+
+// console.log(calculate("1+7"));
 
 // Q Task
 
