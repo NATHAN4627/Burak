@@ -1,7 +1,7 @@
 import { T } from "../libs/types/common";
 import { Request, Response } from "express";
 import MemberService from "../models/Member.service";
-import { MemberInput, LoginInput } from "../libs/types/member";
+import { MemberInput, LoginInput, AdminRequest } from "../libs/types/member";
 import { MemberType } from "../libs/enums/member.enum";
 
 const memberService = new MemberService(); //STATIC to call in every method
@@ -31,27 +31,37 @@ restaurantController.getLogin = (req: Request, res: Response) => {
   }
 };
 
-restaurantController.processSignup = async (req: Request, res: Response) => {
+restaurantController.processSignup = async (
+  req: AdminRequest,
+  res: Response
+) => {
   try {
     const newMember: MemberInput = req.body;
     newMember.memberType = MemberType.RESTAURANT;
 
     const result = await memberService.processSignup(newMember);
-    // TODO: SESSIONS AUTH
-
-    res.send(result);
+    // SESSIONS AUTH
+    req.session.member = result;
+    req.session.save(function () {
+      res.send(result);
+    });
   } catch (err) {
     res.send(err);
   }
 };
 
-restaurantController.processLogin = async (req: Request, res: Response) => {
+restaurantController.processLogin = async (
+  req: AdminRequest,
+  res: Response
+) => {
   try {
     const input: LoginInput = req.body,
       result = await memberService.processLogin(input);
-    // TODO: SESSIONS AUTH
-
-    res.send(result);
+    // SESSIONS AUTH
+    req.session.member = result;
+    req.session.save(function () {
+      res.send(result);
+    });
   } catch (err) {
     res.send(err);
   }
