@@ -7,6 +7,7 @@ import { MORGAN_FORMAT } from "./libs/config";
 
 import session from "express-session";
 import ConnectMongoDB from "connect-mongodb-session";
+import { T } from "./libs/types/common";
 
 const MongoDbStore = ConnectMongoDB(session);
 const store = new MongoDbStore({
@@ -33,6 +34,14 @@ app.use(
     saveUninitialized: true,
   })
 );
+// Browser locals variables to work in ejs
+app.use(function (req, res, next) {
+  // Browser uchun local variables'ni hosil qildik
+  // ejs da tugridan-tugri <%%> qilib chaqirish uchun
+  const sessionInstance = req.session as T;
+  res.locals.member = sessionInstance.member;
+  next();
+});
 
 // 3.Views
 app.set("views", path.join(__dirname, "views"));
