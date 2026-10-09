@@ -5,8 +5,9 @@ import {
   ProductStatus,
   ProductVolume,
 } from "../libs/enums/product.enum";
+import { Product } from "../libs/types/product";
 
-const productSchema = new Schema(
+const productSchema = new Schema<Product>(
   {
     productStatus: {
       type: String,

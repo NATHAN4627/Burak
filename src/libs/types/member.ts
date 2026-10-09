@@ -38,4 +38,7 @@ export interface LoginInput {
 export interface AdminRequest extends Request {
   member: Member;
   session: Session & { member: Member };
+  // productCreate qilekanda Image ni map() qilib qaytarishi uchun controllerda
+  file: Express.Multer.File;
+  files: Express.Multer.File[];
 }
