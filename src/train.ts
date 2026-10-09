@@ -1,14 +1,23 @@
-// S Task
+// T Task
 
-function missingNumber(nums: number[]): number {
-  nums.sort();
-  for (let i = 0; i < nums.length; i++) {
-    if (i !== nums[i]) return i;
-  }
-  return nums.length;
+function mergeSortedArrays(nums1: number[], nums2: number[]): number[] {
+  const res = [...nums1, ...nums2];
+  return res.sort((a, b) => a - b);
 }
 
-console.log(missingNumber([0, 1, 2, 3, 5]));
+console.log(mergeSortedArrays([3, 6, 12, 1], [60, 9, 0, 7]));
+
+// S Task
+
+// function missingNumber(nums: number[]): number {
+//   nums.sort();
+//   for (let i = 0; i < nums.length; i++) {
+//     if (i !== nums[i]) return i;
+//   }
+//   return nums.length;
+// }
+
+// console.log(missingNumber([0, 1, 2, 3, 5]));
 
 // R Task
 
