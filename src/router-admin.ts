@@ -12,7 +12,6 @@ routerAdmin
   .post(
     "/signup",
     makeUploader("members").single("memberImage"),
-    //makeUploader da next() quyish shart emasmi? file upload bulgandan keyin keyingisiga uzi utib ketadimi?
     restaurantController.processSignup
   );
 
