@@ -1,11 +1,24 @@
-// T Task
-
-function mergeSortedArrays(nums1: number[], nums2: number[]): number[] {
-  const res = [...nums1, ...nums2];
-  return res.sort((a, b) => a - b);
+// U Task
+function sumOdds(num: number): number {
+  let count = 0;
+  for (let i = 0; i <= num; i++) {
+    if (i % 2 === 1) {
+      count += 1;
+    }
+  }
+  return count;
 }
 
-console.log(mergeSortedArrays([3, 6, 12, 1], [60, 9, 0, 7]));
+console.log(sumOdds(11));
+
+// T Task
+
+// function mergeSortedArrays(nums1: number[], nums2: number[]): number[] {
+//   const res = [...nums1, ...nums2];
+//   return res.sort((a, b) => a - b);
+// }
+
+// console.log(mergeSortedArrays([3, 6, 12, 1], [60, 9, 0, 7]));
 
 // S Task
 
