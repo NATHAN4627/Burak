@@ -126,4 +126,29 @@ restaurantController.verifyRestaurant = (
   }
 };
 
+restaurantController.getUsers = async (req: Request, res: Response) => {
+  try {
+    console.log("getUsers");
+    const result = await memberService.getUsers();
+
+    res.render("users", { users: result });
+  } catch (err) {
+    console.log("Error, getUsers", err);
+    res.redirect("/admin/login");
+  }
+};
+
+restaurantController.updateChosenUser = async (req: Request, res: Response) => {
+  try {
+    console.log("getUserupdateChosenUsers");
+    const result = await memberService.updateChosenUser(req.body);
+
+    res.status(HttpCode.OK).json({ data: result });
+  } catch (err) {
+    console.log("Error, updateChosenUser", err);
+    if (err instanceof Errors) res.status(err.code).json(err.message);
+    else res.status(Errors.standard.code).json(Errors.standard);
+  }
+};
+
 export default restaurantController;

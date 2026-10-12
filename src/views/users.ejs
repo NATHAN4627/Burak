@@ -1,5 +1,10 @@
 <%- include('includes/header') %>
 <body>
   <div>Users page</div>
+  <div>
+    <% users.map((ele)=> {%>
+    <p><%=ele.memberNick%> -> <%=ele.memberStatus%></p>
+    <%}) %>
+  </div>
 </body>
 <%- include('includes/footer') %>

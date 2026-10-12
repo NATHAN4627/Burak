@@ -18,8 +18,10 @@ class ProductService {
 
   /** SSR */
   public async getAllProducts(): Promise<Product[]> {
+    // find() product topilmasa uzi auto [] bosh array qaytaradi
     const result = await this.productModel.find().exec();
 
+    // agar db da qandaydir xato bulsa custom Errors tashlaydi
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
 
     return result;

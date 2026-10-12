@@ -25,6 +25,7 @@ routerAdmin
 
 /** Product */
 routerAdmin
+  // verifyRestaurant ni umumiy qilib takshirib qolishni sinab kuramiz!
   .get(
     "/product/all",
     restaurantController.verifyRestaurant,
@@ -43,5 +44,16 @@ routerAdmin
   );
 
 /** User */
+routerAdmin
+  .get(
+    "/user/all",
+    restaurantController.verifyRestaurant,
+    restaurantController.getUsers
+  )
+  .post(
+    "/user/edit",
+    restaurantController.verifyRestaurant,
+    restaurantController.updateChosenUser
+  );
 
 export default routerAdmin;
