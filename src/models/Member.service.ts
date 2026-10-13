@@ -122,6 +122,8 @@ class MemberService {
 
   public async updateChosenUser(input: MemberUpdateInput): Promise<Member> {
     const memberId = shapeIntoMongooseObjectId(input._id);
+    // interface da pswd ni ham uzgartirishga ruhsat berganmiz lekn u has bolmasdan db ga saqlanib qoldi!!!
+    // Mentorga ayting!!!
     const result = await this.memberModel
       .findOneAndUpdate({ _id: memberId }, input, { new: true })
       .exec();
