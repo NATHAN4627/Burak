@@ -5,6 +5,7 @@ import app from "./app";
 
 mongoose.set('strictQuery', true);
 
+// TCP1
 mongoose
   .connect(process.env.MONGO_URL as string)
   .then((data) => {
