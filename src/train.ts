@@ -1,15 +1,30 @@
-// U Task
-function sumOdds(num: number): number {
-  let count = 0;
-  for (let i = 0; i <= num; i++) {
-    if (i % 2 === 1) {
-      count += 1;
-    }
+// V Task
+
+function countChars(str: string) {
+  let obj: any = {};
+
+  for (let letter of str) {
+    obj[letter] = (obj[letter] || 0) + 1;
   }
-  return count;
+
+  return obj;
 }
 
-console.log(sumOdds(11));
+console.log(countChars("sssnathan"));
+
+// U Task
+
+// function sumOdds(num: number): number {
+//   let count = 0;
+//   for (let i = 0; i <= num; i++) {
+//     if (i % 2 === 1) {
+//       count += 1;
+//     }
+//   }
+//   return count;
+// }
+
+// console.log(sumOdds(11));
 
 // T Task
 
