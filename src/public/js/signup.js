@@ -1,5 +1,10 @@
 console.log("Signup frontend javascript file");
 
+// validateSignUp() global funksiya, memberNick va memberPassword esa uning o’z ichidagi local o’zgaruvchilari bo’lib,
+// har chaqirilganda $(".class").val() bilan DOM’dan qayta o’qiladi.
+// Ular $(function(){}) ning local’lari emas. onsubmit faqat global funksiyani chaqiradi,
+//  funksiya ichidagi local’lar esa tashqariga ko’rinmaydi.
+
 $(function () {
   const fileTarget = $(".file-box .upload-hidden");
   let filename;
@@ -24,8 +29,8 @@ $(function () {
 });
 
 function validateSignUp() {
-  const memberNick = $(".member-nick").val();
-  const memberPhone = $(".member-phone").val();
+  const memberNick = $(".member-nick").val().trim();
+  const memberPhone = $(".member-phone").val().trim();
   const memberPassword = $(".member-password").val();
   const memberConfirmPassword = $(".confirm-password").val();
 
