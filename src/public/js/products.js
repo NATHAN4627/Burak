@@ -1,5 +1,5 @@
-//3
 $(function () {
+  //3
   $(".product-collection").on("change", () => {
     const selectedValue = $(".product-collection").val();
     if (selectedValue === "DRINK") {
@@ -22,6 +22,7 @@ $(function () {
     $("#process-btn").css("display", "flex");
   });
 
+  //5
   $(".new-product-status").on("change", async function (e) {
     const id = e.target.id;
     const productStatus = $(`#${id}.new-product-status`).val();
