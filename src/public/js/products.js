@@ -37,7 +37,7 @@ $(function () {
       if (result.data) {
         $(".new-product-status").blur();
       } else {
-        alert("Product update failed");
+        alert("Product update failed!");
       }
     } catch (err) {
       console.log(("Error product status:", err));
