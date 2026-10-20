@@ -1,5 +1,5 @@
 import { shapeIntoMongooseObjectId } from "../libs/config";
-import { MemberType } from "../libs/enums/member.enum";
+import { MemberStatus, MemberType } from "../libs/enums/member.enum";
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import {
   Member,
@@ -33,18 +33,22 @@ class MemberService {
   }
 
   public async login(input: LoginInput): Promise<Member> {
-    // TODO: Consider member status later
     const member = await this.memberModel
       .findOne(
-        { memberNick: input.memberNick },
+        {
+          memberNick: input.memberNick,
+          memberStatus: { $ne: MemberStatus.DELETE },
+        },
         //login qilganda memberNick va memberPasswordni 1 orqali olib kelish uchun yozdik
-        { memberNick: 1, memberPassword: 1 }
+        { memberNick: 1, memberPassword: 1, memberStatus: 1 }
       )
       .exec();
 
     //2 ta errorni bitta qilsak xavfsizlik uchun yaxshi buladi!!!
     if (!member || !member.memberPassword) {
       throw new Errors(HttpCode.UNAUTHORIZED, Message.WRONG_PSWD_NICK);
+    } else if (member.memberStatus === MemberStatus.BLOCK) {
+      throw new Errors(HttpCode.FORBIDDEN, Message.BLOCKED_USER);
     }
 
     const isMatch = await bcrypt.compare(
