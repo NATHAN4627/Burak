@@ -3,15 +3,18 @@ import { Request, Response } from "express";
 import MemberService from "../models/Member.service";
 import { LoginInput, MemberInput } from "../libs/types/member";
 import Errors from "../libs/Errors";
+import AuthService from "../models/Auth.service";
 
 const memberService = new MemberService(); //STATIC to call in every method
+const authService = new AuthService();
+
 const memberController: T = {};
 
 memberController.signup = async (req: Request, res: Response) => {
   try {
     const input: MemberInput = req.body,
-      result = await memberService.signup(input);
-    // TODO: TOKENS AUTH
+      result = await memberService.signup(input),
+      token = await authService.createToken(result);
 
     res.json({ member: result });
   } catch (err) {
@@ -25,8 +28,8 @@ memberController.signup = async (req: Request, res: Response) => {
 memberController.login = async (req: Request, res: Response) => {
   try {
     const input: LoginInput = req.body,
-      result = await memberService.login(input);
-    // TODO: TOKENS AUTH
+      result = await memberService.login(input),
+      token = await authService.createToken(result);
 
     res.json({ member: result });
   } catch (err) {
