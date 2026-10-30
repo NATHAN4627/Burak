@@ -56,6 +56,7 @@ export interface AdminRequest extends Request {
 
 export interface ExtendedRequest extends Request {
   member: Member;
+  // productCreate qilekanda Image ni map() qilib qaytarishi uchun controllerda
   file: Express.Multer.File;
   files: Express.Multer.File[];
 }
