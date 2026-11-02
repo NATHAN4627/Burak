@@ -4,6 +4,8 @@ import restaurantController from "./controllers/restaurant.controller";
 import productController from "./controllers/product.controller";
 import makeUploader from "./libs/utils/uploader";
 
+//SSR
+
 /** Restaurant (Adminka) */
 routerAdmin.get("/", restaurantController.goHome);
 
