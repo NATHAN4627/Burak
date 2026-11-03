@@ -2,21 +2,47 @@ import Errors, { HttpCode, Message } from "../libs/Errors";
 import { T } from "../libs/types/common";
 import { Request, Response } from "express";
 import ProductService from "../models/Product.service";
-import { ProductInput } from "../libs/types/product";
+import { ProductInput, ProductInquery } from "../libs/types/product";
 import { AdminRequest } from "../libs/types/member";
+import { ProductCollection } from "../libs/enums/product.enum";
 
 const productService = new ProductService();
-const memberController: T = {};
+const productController: T = {};
 
 /** SPA */
+productController.getProducts = async (req: Request, res: Response) => {
+  try {
+    const { page, limit, order, productCollection, search } = req.query;
+
+    const inquery: ProductInquery = {
+      order: String(order),
+      page: Number(page),
+      limit: Number(limit),
+    };
+    if (productCollection) {
+      inquery.productCollection = productCollection as ProductCollection;
+    }
+    if (search) {
+      inquery.search = String(search);
+    }
+
+    const result = await productService.getProducts(inquery);
+
+    res.status(HttpCode.OK).json(result);
+  } catch (err) {
+    console.log("Error, getProducts", err);
+    if (err instanceof Errors) res.status(err.code).json(err);
+    else res.status(Errors.standard.code).json(Errors.standard);
+  }
+};
 
 /** SSR */
-memberController.getAllProducts = async (req: Request, res: Response) => {
+productController.getAllProducts = async (req: Request, res: Response) => {
   try {
     console.log("getAllProducts");
 
     const result = await productService.getAllProducts();
-    
+
     res.render("products", { products: result });
   } catch (err) {
     console.log("Error, getAllProducts", err);
@@ -25,7 +51,7 @@ memberController.getAllProducts = async (req: Request, res: Response) => {
   }
 };
 
-memberController.createNewProduct = async (
+productController.createNewProduct = async (
   req: AdminRequest,
   res: Response
 ) => {
@@ -54,7 +80,7 @@ memberController.createNewProduct = async (
   }
 };
 
-memberController.updateChosenProduct = async (req: Request, res: Response) => {
+productController.updateChosenProduct = async (req: Request, res: Response) => {
   try {
     console.log("updateChosenProduct");
 
@@ -70,4 +96,4 @@ memberController.updateChosenProduct = async (req: Request, res: Response) => {
   }
 };
 
-export default memberController;
+export default productController;
