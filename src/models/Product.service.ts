@@ -64,7 +64,9 @@ class ProductService {
       .exec();
     if (!result) throw new Errors(HttpCode.NOT_FOUND, Message.NO_DATA_FOUND);
 
+    //only authenticated member
     if (memberId) {
+      //check existence
       const input: ViewInput = {
         memberId: memberId,
         viewRefId: productId,
@@ -73,8 +75,10 @@ class ProductService {
       const existView = await this.viewService.checkViewExistence(input);
 
       if (!existView) {
+        //insert view (save to db)
         await this.viewService.insertMemberView(input);
 
+        //count+1 -> view
         const updatedView = await this.productModel
           .findByIdAndUpdate(
             productId,
