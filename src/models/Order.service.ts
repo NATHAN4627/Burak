@@ -2,7 +2,7 @@ import { ObjectId } from "mongoose";
 import { shapeIntoMongooseObjectId } from "../libs/config";
 import Errors, { HttpCode, Message } from "../libs/Errors";
 import { Member } from "../libs/types/member";
-import { Order, OrderItemInput } from "../libs/types/order";
+import { Order, OrderInquery, OrderItemInput } from "../libs/types/order";
 import OrderModel from "../schema/Order.model";
 import OrderItemModel from "../schema/OrderItem.model";
 
@@ -50,12 +50,46 @@ class OrderService {
     const promisedList = input.map(async (item: OrderItemInput) => {
       (item.orderId = orderId),
         (item.productId = shapeIntoMongooseObjectId(item.productId));
-      await this.orderItemModel.create(item);
-      return "INSERTED";
+      return await this.orderItemModel.create(item);
     });
 
     const orderItemsState = await Promise.all(promisedList);
     console.log(orderItemsState);
+  }
+
+  public async getMyOrders(
+    member: Member,
+    inquery: OrderInquery
+  ): Promise<Order[]> {
+    const memberId = shapeIntoMongooseObjectId(member._id);
+    const matches = { memberId: memberId, orderStatus: inquery.orderStatus };
+
+    const result = await this.orderModel
+      .aggregate([
+        { $match: matches },
+        { $sort: { updatedAt: -1 } },
+        { $skip: (inquery.page - 1) * inquery.limit },
+        { $limit: inquery.limit },
+        {
+          $lookup: {
+            from: "orderItems",
+            localField: "_id",
+            foreignField: "orderId",
+            as: "orderItems",
+          },
+        },
+        {
+          $lookup: {
+            from: "products",
+            localField: "orderItems.productId",
+            foreignField: "_id",
+            as: "productData",
+          },
+        },
+      ])
+      .exec();
+
+    return result;
   }
 }
 
