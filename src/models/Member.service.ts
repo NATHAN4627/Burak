@@ -117,6 +117,22 @@ class MemberService {
     return result;
   }
 
+  public async addUserPoint(member: Member, point: number): Promise<Member> {
+    const memberId = shapeIntoMongooseObjectId(member._id);
+
+    return (await this.memberModel
+      .findOneAndUpdate(
+        {
+          _id: memberId,
+          memberStatus: MemberStatus.ACTIVE,
+          memberType: MemberType.USER,
+        },
+        { $inc: { memberPoints: point } },
+        { new: true }
+      )
+      .exec()) as Member;
+  }
+
   /** SSR (Admin)*/
   public async processSignup(input: MemberInput): Promise<Member> {
     const exist = await this.memberModel
