@@ -52,7 +52,6 @@ function validateForm() {
     productPrice = $(".product-price").val().trim(),
     productLeftCount = $(".product-left-count").val().trim(),
     productCollection = $(".product-collection").val().trim(),
-    productDesc = $(".product-desc").val().trim(),
     productStatus = $(".product-status").val();
 
   if (
@@ -60,7 +59,6 @@ function validateForm() {
     productPrice === "" ||
     productLeftCount === "" ||
     productCollection === "" ||
-    productDesc === "" ||
     productStatus === ""
   ) {
     alert("Please, fill all input!");
