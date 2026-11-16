@@ -9,6 +9,7 @@ import { MORGAN_FORMAT } from "./libs/config";
 import session from "express-session";
 import ConnectMongoDB from "connect-mongodb-session";
 import { T } from "./libs/types/common";
+import cors from "cors";
 
 // TCP2
 const MongoDbStore = ConnectMongoDB(session);
@@ -22,6 +23,7 @@ const app = express();
 app.use(express.static(path.join(__dirname, "public")));
 app.use("/uploads", express.static("./uploads"));
 app.use(express.urlencoded({ extended: true }));
+app.use(cors({ credentials: true, origin: true }));
 app.use(cookieParser());
 app.use(express.json());
 app.use(morgan(MORGAN_FORMAT)); //shows url info in console
@@ -36,7 +38,7 @@ app.use(
     store: store,
     resave: true,
     saveUninitialized: true,
-  })
+  }),
 );
 // Browser locals variables to work in ejs
 app.use(function (req, res, next) {
